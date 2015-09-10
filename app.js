@@ -4,11 +4,24 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mysql      = require('mysql');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'ysss.ru',
+  password : 'ysssysss',
+  database : 'ysss.ru'
+});
+connection.connect();
+
+connection.query('INSERT INTO url (url, short) Values ("test", "olololo")', function(err, rows){
+	console.log(err);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
