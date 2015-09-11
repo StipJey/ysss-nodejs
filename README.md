@@ -1,2 +1,2 @@
 # ysss-nodejs
-test autodeployment
+test autodeplo
