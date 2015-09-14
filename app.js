@@ -13,8 +13,8 @@ var app = express();
 
 db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'root',
-  password : '',
+  user     : 'ysss.ru',
+  password : 'ysssysss',
   database : 'ysss.ru'
 });
 db.connect();
