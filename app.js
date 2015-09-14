@@ -7,21 +7,41 @@ var bodyParser = require('body-parser');
 var mysql      = require('mysql');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
+//var users = require('./routes/users');
 
 var app = express();
 
-var connection = mysql.createConnection({
+db = mysql.createConnection({
   host     : 'localhost',
-  user     : 'ysss.ru',
-  password : 'ysssysss',
+  user     : 'root',
+  password : '',
   database : 'ysss.ru'
 });
-connection.connect();
+db.connect();
 
-connection.query('INSERT INTO url (url, short) Values ("test", "olololo")', function(err, rows){
-	console.log(err);
-});
+/**
+* Random words generator
+*/
+randWD = function(n){  // [ 3 ] random words and digits by the wocabulary
+  var s ='', abd ='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', aL = abd.length;
+  while(s.length < n)
+    s += abd[Math.random() * aL|0];
+  return s;
+};
+
+//get data from database
+db_get = function(param, value, callback){
+  db.query('SELECT * FROM url where '+param+' = "'+value+'"',function(err, rows){
+      callback(rows);
+  });
+};
+
+//return (err?false:true);
+db_set = function(data, short){
+  db.query('INSERT INTO url (url, short) Values ("'+url+'", "'+short+'")', function(err, rows){
+    console.log(err);
+  });
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -36,7 +56,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/users', users);
+//app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
